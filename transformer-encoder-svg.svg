@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Styles -->
+  <style>
+    .box { fill: #f0f8ff; stroke: #4682b4; stroke-width: 2; }
+    .residual-box { fill: #e6f3ff; stroke: #4169e1; stroke-width: 3; stroke-dasharray: 5,3; }
+    .arrow { fill: none; stroke: #2f4f4f; stroke-width: 2.5; marker-end: url(#arrowhead); }
+    .residual-arrow { fill: none; stroke: #ff6347; stroke-width: 2.5; stroke-dasharray: 5,3; marker-end: url(#arrowhead); }
+    .label { font-family: Arial, sans-serif; font-size: 16px; text-anchor: middle; }
+    .title { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; text-anchor: middle; }
+    .comment { font-family: Arial, sans-serif; font-size: 12px; fill: #696969; }
+    .comment-box { fill: #fffacd; stroke: #daa520; stroke-width: 1; rx: 8; ry: 8; }
+  </style>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2f4f4f"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="30" class="title">Transformer Encoder Block Structure</text>
+  
+  <!-- Input -->
+  <rect x="350" y="50" width="100" height="40" rx="10" ry="10" class="box"/>
+  <text x="400" y="75" class="label">Input (x)</text>
+  
+  <!-- Residual Connection 1 Box -->
+  <rect x="200" y="120" width="400" height="300" rx="10" ry="10" class="residual-box"/>
+  <text x="400" y="145" class="title">Residual Connection 1</text>
+  
+  <!-- Layer Norm 1 -->
+  <rect x="300" y="160" width="200" height="40" rx="10" ry="10" class="box"/>
+  <text x="400" y="185" class="label">Layer Normalization</text>
+  
+  <!-- Multi-Head Attention -->
+  <rect x="250" y="230" width="300" height="80" rx="10" ry="10" class="box"/>
+  <text x="400" y="255" class="label">Multi-Head Self-Attention</text>
+  <text x="400" y="275" class="comment">(Q, K, V all from x)</text>
+  <text x="400" y="295" class="comment">Uses src_mask to avoid padding</text>
+  
+  <!-- Dropout 1 -->
+  <rect x="300" y="340" width="200" height="40" rx="10" ry="10" class="box"/>
+  <text x="400" y="365" class="label">Dropout</text>
+  
+  <!-- Addition 1 -->
+  <circle cx="400" cy="410" r="20" fill="#ff6347" stroke="#8b0000" stroke-width="2"/>
+  <text x="400" y="415" class="label" fill="white">+</text>
+  
+  <!-- Residual Connection 2 Box -->
+  <rect x="200" y="460" width="400" height="300" rx="10" ry="10" class="residual-box"/>
+  <text x="400" y="485" class="title">Residual Connection 2</text>
+  
+  <!-- Layer Norm 2 -->
+  <rect x="300" y="500" width="200" height="40" rx="10" ry="10" class="box"/>
+  <text x="400" y="525" class="label">Layer Normalization</text>
+  
+  <!-- Feed Forward Network -->
+  <rect x="250" y="570" width="300" height="80" rx="10" ry="10" class="box"/>
+  <text x="400" y="595" class="label">Feed Forward Network</text>
+  <text x="400" y="615" class="comment">(Two linear layers with ReLU)</text>
+  <text x="400" y="635" class="comment">Projects to higher dim and back</text>
+  
+  <!-- Dropout 2 -->
+  <rect x="300" y="680" width="200" height="40" rx="10" ry="10" class="box"/>
+  <text x="400" y="705" class="label">Dropout</text>
+  
+  <!-- Addition 2 -->
+  <circle cx="400" cy="750" r="20" fill="#ff6347" stroke="#8b0000" stroke-width="2"/>
+  <text x="400" y="755" class="label" fill="white">+</text>
+  
+  <!-- Output -->
+  <rect x="350" y="800" width="100" height="40" rx="10" ry="10" class="box"/>
+  <text x="400" y="825" class="label">Output</text>
+  
+  <!-- Connecting Arrows - Main Flow -->
+  <path d="M 400 90 L 400 160" class="arrow"/>
+  <path d="M 400 200 L 400 230" class="arrow"/>
+  <path d="M 400 310 L 400 340" class="arrow"/>
+  <path d="M 400 380 L 400 390" class="arrow"/>
+  <path d="M 400 430 L 400 500" class="arrow"/>
+  <path d="M 400 540 L 400 570" class="arrow"/>
+  <path d="M 400 650 L 400 680" class="arrow"/>
+  <path d="M 400 720 L 400 730" class="arrow"/>
+  <path d="M 400 770 L 400 800" class="arrow"/>
+  
+  <!-- Residual Arrows -->
+  <path d="M 400 90 C 150 90, 150 410, 380 410" class="residual-arrow"/>
+  <path d="M 400 430 C 150 430, 150 750, 380 750" class="residual-arrow"/>
+  
+  <!-- Comments -->
+  <rect x="600" y="200" width="180" height="100" class="comment-box"/>
+  <text x="610" y="220" class="comment" text-anchor="start">First residual connection:</text>
+  <text x="610" y="240" class="comment" text-anchor="start">* Lambda function used to</text>
+  <text x="610" y="260" class="comment" text-anchor="start">  adapt the attention interface</text>
+  <text x="610" y="280" class="comment" text-anchor="start">* Preserves original token</text>
+  <text x="610" y="300" class="comment" text-anchor="start">  and position information</text>
+  
+  <rect x="600" y="550" width="180" height="100" class="comment-box"/>
+  <text x="610" y="570" class="comment" text-anchor="start">Second residual connection:</text>
+  <text x="610" y="590" class="comment" text-anchor="start">* Feed-forward directly used</text>
+  <text x="610" y="610" class="comment" text-anchor="start">  as the sublayer</text>
+  <text x="610" y="630" class="comment" text-anchor="start">* Helps with gradient flow</text>
+  <text x="610" y="650" class="comment" text-anchor="start">* Enables feature refinement</text>
+  
+  <rect x="30" y="350" width="160" height="200" class="comment-box"/>
+  <text x="40" y="370" class="comment" text-anchor="start">WHY TWO SEPARATE</text>
+  <text x="40" y="390" class="comment" text-anchor="start">RESIDUAL CONNECTIONS?</text>
+  <text x="40" y="420" class="comment" text-anchor="start">1. Stabilizes training</text>
+  <text x="40" y="445" class="comment" text-anchor="start">2. Each component learns</text>
+  <text x="40" y="465" class="comment" text-anchor="start">   specific functions</text>
+  <text x="40" y="490" class="comment" text-anchor="start">3. Multiple paths for</text>
+  <text x="40" y="510" class="comment" text-anchor="start">   gradient flow</text>
+  <text x="40" y="535" class="comment" text-anchor="start">4. Preserves information</text>
+  
+  <!-- Code Representation -->
+  <rect x="30" y="120" width="160" height="200" class="comment-box"/>
+  <text x="40" y="140" class="comment" text-anchor="start">IN CODE:</text>
+  <text x="40" y="170" class="comment" text-anchor="start">self.residual_connections[0](</text>
+  <text x="40" y="190" class="comment" text-anchor="start">  x,</text>
+  <text x="40" y="210" class="comment" text-anchor="start">  lambda x: self.self_</text>
+  <text x="40" y="230" class="comment" text-anchor="start">  attention_block(</text>
+  <text x="40" y="250" class="comment" text-anchor="start">    x, x, x, src_mask</text>
+  <text x="40" y="270" class="comment" text-anchor="start">  )</text>
+  <text x="40" y="290" class="comment" text-anchor="start">)</text>
+  
+  <rect x="30" y="580" width="160" height="140" class="comment-box"/>
+  <text x="40" y="600" class="comment" text-anchor="start">IN CODE:</text>
+  <text x="40" y="630" class="comment" text-anchor="start">self.residual_connections[1](</text>
+  <text x="40" y="650" class="comment" text-anchor="start">  x,</text>
+  <text x="40" y="670" class="comment" text-anchor="start">  self.feed_forward_block</text>
+  <text x="40" y="690" class="comment" text-anchor="start">)</text>
+</svg>
